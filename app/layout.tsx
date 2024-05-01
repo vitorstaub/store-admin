@@ -1,9 +1,13 @@
+const inter = Inter({ subsets: ["latin"] });
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
-const inter = Inter({ subsets: ["latin"] });
+import { ModalProvider } from "@/components/modal-provider";
+
+import "./globals.css";
+import prismadb from "@/lib/prismadb";
+import { Toaster } from "sonner"
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -18,7 +22,17 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <Toaster 
+            duration={3000}
+            closeButton
+            richColors
+            position="top-right"
+            visibleToasts={3}
+          />
+          <ModalProvider />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   )
