@@ -44,6 +44,7 @@ export default function StoreSwitcher({
   const storeModal = useStoreModal();
   const params = useParams();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const formattedItems = items.map((item) => ({
     label: item.name,
@@ -54,7 +55,6 @@ export default function StoreSwitcher({
     (item) => item.value === params.storeId
   );
 
-  const [open, setOpen] = useState(false);
 
   const onStoreSelect = (store: { value: string; label: string }) => {
     setOpen(false);
@@ -62,7 +62,7 @@ export default function StoreSwitcher({
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} >
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -86,6 +86,7 @@ export default function StoreSwitcher({
               {formattedItems.map((store) => (
                 <CommandItem
                   key={store.value}
+                  value={store.value}
                   onSelect={() => onStoreSelect(store)}
                   className="text-sm"
                 >
