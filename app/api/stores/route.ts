@@ -1,11 +1,9 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 
 import prismadb from "@/lib/prismadb";
 
-export async function POST(
-  req: Request, 
-) {
+export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const body = await req.json();
@@ -17,19 +15,19 @@ export async function POST(
     }
 
     if (!name) {
-      return new NextResponse("Name is required", { status: 400 })
+      return new NextResponse("Name is required", { status: 400 });
     }
 
     const store = await prismadb.store.create({
       data: {
         name,
-        userId
-      }
-    })
+        userId,
+      },
+    });
 
-    return NextResponse.json(store)
+    return NextResponse.json(store);
   } catch (error) {
-    console.log('[STORES_POST]' ,error)
-    return new NextResponse("Interal error", { status: 500 })
+    console.log("[STORES_POST]", error);
+    return new NextResponse("Interal error", { status: 500 });
   }
 }

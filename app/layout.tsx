@@ -7,7 +7,7 @@ import { ModalProvider } from "@/components/modal-provider";
 
 import "./globals.css";
 import prismadb from "@/lib/prismadb";
-import { Toaster } from "sonner"
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -17,13 +17,13 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Toaster 
+          <Toaster
             duration={3000}
             closeButton
             richColors
@@ -35,5 +35,5 @@ export default function RootLayout({
         </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }

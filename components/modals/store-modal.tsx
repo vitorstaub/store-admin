@@ -34,19 +34,19 @@ export const StoreModal = () => {
     },
   });
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      setLoading(true)
+      setLoading(true);
 
-      const response = await axios.post('/api/stores', values)
+      const response = await axios.post("/api/stores", values);
 
-      toast.success("e-loja criada com sucesso!")
+      toast.success("e-loja criada com sucesso!");
     } catch (error) {
-      toast.error("algo deu errado!")
+      toast.error("algo deu errado!");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -68,25 +68,27 @@ export const StoreModal = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input 
-                        disabled = { loading }
-                        placeholder="E-loja" 
-                        {...field} />
+                      <Input
+                        disabled={loading}
+                        placeholder="E-loja"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage></FormMessage>
                   </FormItem>
                 )}
               />
               <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-                <Button 
-                disabled = { loading }
-                variant="outline" 
-                onClick={storeModal.onClose}>
+                <Button
+                  disabled={loading}
+                  variant="outline"
+                  onClick={storeModal.onClose}
+                >
                   Cancelar
                 </Button>
-                <Button 
-                disabled = { loading }
-                type="submit">Continuar</Button>
+                <Button disabled={loading} type="submit">
+                  Continuar
+                </Button>
               </div>
             </form>
           </Form>
