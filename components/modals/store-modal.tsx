@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 
 const formSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1).max(17),
 });
 
 export const StoreModal = () => {
