@@ -30,18 +30,18 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Billboard id copiada para a área de transferência.");
+    toast.success("Products id copiada para a área de transferência.");
   };
 
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/products/${data.id}`);
       router.refresh();
-      toast.success("Destaque excluído.");
+      toast.success("Produto excluído.");
     } catch (error) {
       toast.error(
-        "Certifique-se de remover todas as categorias que usam esse destaque."
+        "Algo deu errado."
       );
     } finally {
       setLoading(false);
@@ -72,7 +72,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/products/${data.id}`)
             }
           >
             <Edit className="mr-2 h-4 w-4" />
