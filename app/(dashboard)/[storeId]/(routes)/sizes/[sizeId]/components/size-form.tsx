@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { Billboard, Category } from "@prisma/client";
+import { Size } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,66 +23,55 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  billboardId: z.string().min(1),
+  value: z.string().min(1),
 });
 
-type CategoryFormValues = z.infer<typeof formSchema>;
+type SizeFormValues = z.infer<typeof formSchema>;
 
-interface CategoryFormProps {
-  initialData: Category | null;
-  billboards: Billboard[];
+interface SizeFormProps {
+  initialData: Size | null;
 }
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
-  initialData,
-  billboards,
-}) => {
+export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Editar categoria" : "Criar categoria";
+  const title = initialData ? "Editar medidas" : "Criar medidas";
   const description = initialData
-    ? "Alterar o categoria"
-    : "Adicionar uma nova categoria";
+    ? "Alterar as medidas"
+    : "Adicionar uma nova medida";
   const toastMessage = initialData
-    ? "Categoria editada com sucesso."
-    : "Categoria criada com sucesso.";
-  const action = initialData ? "Salvar mudanças" : "Criar categoria";
+    ? "Medida editada com sucesso."
+    : "Medidas criada com sucesso.";
+  const action = initialData ? "Salvar mudanças" : "Criar";
 
-  const form = useForm<CategoryFormValues>({
+  const form = useForm<SizeFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: "",
-      billboardId: "",
+      value: "",
     },
   });
 
-  const onSubmit = async (data: CategoryFormValues) => {
+  const onSubmit = async (data: SizeFormValues) => {
     try {
       setLoading(true);
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/categories/${params.categoryId}`,
+          `/api/${params.storeId}/sizes/${params.sizeId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/categories/`, data);
+        await axios.post(`/api/${params.storeId}/sizes/`, data);
       }
-
-      router.push(`/${params.storeId}/categories`);
+      router.push(`/${params.storeId}/sizes`);
       router.refresh();
       toast.success(toastMessage);
     } catch (error) {
@@ -96,14 +85,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     try {
       setLoading(true);
       await axios.delete(
-        `/api/${params.storeId}/categories/${params.categoryId}`
+        `/api/${params.storeId}/sizes/${params.sizeId}`
       );
-      router.push(`/${params.storeId}/categories`);
+      router.push(`/${params.storeId}/sizes`);
       router.refresh();
-      toast.success("Categoria excluída.");
+      toast.success("Medida excluído.");
     } catch (error) {
       toast.error(
-        "Certifique-se de remover todas os produtos que usam essa categoria."
+        "Certifique-se de remover todas os produtos que usam essa medida."
       );
     } finally {
       setLoading(false);
@@ -148,7 +137,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Nome da categoria"
+                      placeholder="Nome da medida"
                       {...field}
                     />
                   </FormControl>
@@ -158,32 +147,17 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="billboardId"
+              name="value"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Destaque</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Selecione um destaque"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {billboards.map((billboard) => (
-                        <SelectItem key={billboard.id} value={billboard.id}>
-                          {billboard.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Medida</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder="Valor"
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
