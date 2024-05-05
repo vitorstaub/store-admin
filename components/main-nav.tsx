@@ -38,6 +38,11 @@ export function MainNav({
       active: pathName === `/${params.storeId}/colors`,
     },
     {
+      href: `/${params.storeId}/products`,
+      label: "Produtos",
+      active: pathName === `/${params.storeId}/products`,
+    },
+    {
       href: `/${params.storeId}/settings`,
       label: "Configurações",
       active: pathName === `/${params.storeId}/settings`,

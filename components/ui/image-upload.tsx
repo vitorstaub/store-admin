@@ -61,7 +61,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         ))}
       </div>
-      <CldUploadWidget onSuccess={onUpload} uploadPreset="ruakvum2">
+      <CldUploadWidget onUpload={onUpload} uploadPreset="ruakvum2">
         {({ open }) => {
           const onClick = () => {
             open()
@@ -74,7 +74,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             variant="secondary"
             onClick={onClick}
             >
-              <ImagePlus />
+              <ImagePlus className="h-4 w-4 mr-2"/>
               Carregue uma imagem
             </Button>
           )
