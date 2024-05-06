@@ -1,13 +1,15 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { Decimal } from "@prisma/client/runtime/library";
 
+import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 
 export type ProductColumn = {
   id: string;
   name: string;
   price: string;
+  stock: number;
   size: string;
   color: string;
   isFeatured: boolean;
@@ -21,16 +23,20 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Nome",
   },
   {
+    accessorKey: "price",
+    header: "Preço",
+  },
+  {
+    accessorKey: "stock",
+    header: "Estoque",
+  },
+  {
     accessorKey: "isArchived",
     header: "Arquivado",
   },
   {
     accessorKey: "isFeatured",
     header: "Em destaque",
-  },
-  {
-    accessorKey: "price",
-    header: "Preço",
   },
   {
     accessorKey: "category",

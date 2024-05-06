@@ -41,6 +41,7 @@ export async function PATCH(
     const {
       name,
       price,
+      stock,
       categoryId,
       colorId,
       sizeId,
@@ -56,11 +57,14 @@ export async function PATCH(
     if (!name) {
       return new NextResponse("Nome é obrigatório", { status: 400 });
     }
-    if (!images) {
-      return new NextResponse("Imagem é obrigatório", { status: 400 });
+    if (!images || images.length === 0) {
+      return NextResponse.json({message: "Pelo menos uma imagem é obrigatória"}, { status: 400 });
     }
     if (!price) {
       return new NextResponse("Preço é obrigatório", { status: 400 });
+    }
+    if (!stock) {
+      return new NextResponse("Estoque é obrigatório", { status: 400 });
     }
     if (!categoryId) {
       return new NextResponse("Category id é obrigatório", { status: 400 });
@@ -94,6 +98,7 @@ export async function PATCH(
       data: {
         name,
         price,
+        stock,
         categoryId,
         colorId,
         sizeId,

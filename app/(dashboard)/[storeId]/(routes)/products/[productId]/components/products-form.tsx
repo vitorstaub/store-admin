@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { toast } from "sonner";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useParams, useRouter } from "next/navigation";
 
 import { Heading } from "@/components/ui/heading";
@@ -38,6 +38,7 @@ const formSchema = z.object({
   name: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(0.01),
+  stock: z.coerce.number().int().min(1),
   categoryId: z.string().min(1),
   colorId: z.string().min(1),
   sizeId: z.string().min(1),
@@ -90,6 +91,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           name: "",
           images: [],
           price: 0,
+          stock: 0,
           categoryId: "",
           colorId: "",
           sizeId: "",
@@ -102,18 +104,25 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(
+        const response = await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/products/`, data);
+        const response = await axios.post(
+          `/api/${params.storeId}/products/`,
+          data
+        );
       }
       router.push(`/${params.storeId}/products`);
       router.refresh();
       toast.success(toastMessage);
     } catch (error) {
-      toast.error("Algo deu errado.");
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Erro inesperado");
+      }
     } finally {
       setLoading(false);
     }
@@ -122,9 +131,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/products/${params.productId}`
-      );
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
       router.push(`/${params.storeId}/products`);
       router.refresh();
       toast.success("Produto excluído.");
@@ -217,6 +224,25 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       step="0.1"
                       disabled={loading}
                       placeholder="9,99"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="stock"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Estoque</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="1"
+                      disabled={loading}
+                      placeholder="Quantidade em estoque"
                       {...field}
                     />
                   </FormControl>
