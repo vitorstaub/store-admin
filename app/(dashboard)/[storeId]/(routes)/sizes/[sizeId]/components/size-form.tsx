@@ -1,18 +1,17 @@
-"use client";
+'use client'
 
-import * as z from "zod";
-import { Size } from "@prisma/client";
-import { Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { toast } from "sonner";
-import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Size } from '@prisma/client'
+import axios from 'axios'
+import { Trash } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
-import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { AlertModal } from '@/components/modals/alert-modal'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -20,85 +19,80 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
+} from '@/components/ui/form'
+import { Heading } from '@/components/ui/heading'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
 
 const formSchema = z.object({
   name: z.string().min(1),
   value: z.string().min(1),
-});
+})
 
-type SizeFormValues = z.infer<typeof formSchema>;
+type SizeFormValues = z.infer<typeof formSchema>
 
 interface SizeFormProps {
-  initialData: Size | null;
+  initialData: Size | null
 }
 
 export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams()
+  const router = useRouter()
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const title = initialData ? "Editar medidas" : "Criar medidas";
+  const title = initialData ? 'Editar medidas' : 'Criar medidas'
   const description = initialData
-    ? "Alterar as medidas"
-    : "Adicionar uma nova medida";
+    ? 'Alterar as medidas'
+    : 'Adicionar uma nova medida'
   const toastMessage = initialData
-    ? "Medida editada com sucesso."
-    : "Medidas criada com sucesso.";
-  const action = initialData ? "Salvar mudanças" : "Criar";
+    ? 'Medida editada com sucesso.'
+    : 'Medidas criada com sucesso.'
+  const action = initialData ? 'Salvar mudanças' : 'Criar'
 
   const form = useForm<SizeFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-      name: "",
-      value: "",
+      name: '',
+      value: '',
     },
-  });
+  })
 
   const onSubmit = async (data: SizeFormValues) => {
     try {
-      setLoading(true);
+      setLoading(true)
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/sizes/${params.sizeId}`,
-          data
-        );
+        await axios.patch(`/api/${params.storeId}/sizes/${params.sizeId}`, data)
       } else {
-        await axios.post(`/api/${params.storeId}/sizes/`, data);
+        await axios.post(`/api/${params.storeId}/sizes/`, data)
       }
-      router.push(`/${params.storeId}/sizes`);
-      router.refresh();
-      toast.success(toastMessage);
+      router.push(`/${params.storeId}/sizes`)
+      router.refresh()
+      toast.success(toastMessage)
     } catch (error) {
-      toast.error("Algo deu errado.");
+      toast.error('Algo deu errado.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const onDelete = async () => {
     try {
-      setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/sizes/${params.sizeId}`
-      );
-      router.push(`/${params.storeId}/sizes`);
-      router.refresh();
-      toast.success("Medida excluído.");
+      setLoading(true)
+      await axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`)
+      router.push(`/${params.storeId}/sizes`)
+      router.refresh()
+      toast.success('Medida excluído.')
     } catch (error) {
       toast.error(
-        "Certifique-se de remover todas os produtos que usam essa medida."
-      );
+        'Certifique-se de remover todas os produtos que usam essa medida.',
+      )
     } finally {
-      setLoading(false);
-      setOpen(false);
+      setLoading(false)
+      setOpen(false)
     }
-  };
+  }
 
   return (
     <>
@@ -152,11 +146,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Medida</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Valor"
-                      {...field}
-                    />
+                    <Input disabled={loading} placeholder="Valor" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -169,5 +159,5 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
         </form>
       </Form>
     </>
-  );
-};
+  )
+}

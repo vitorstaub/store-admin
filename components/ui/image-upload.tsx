@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { CldUploadWidget } from "next-cloudinary"
+import { CldUploadWidget } from 'next-cloudinary'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
-import { Button } from "@/components/ui/button";
-import { ImagePlus, Trash } from "lucide-react";
+import { Button } from '@/components/ui/button'
+import { ImagePlus, Trash } from 'lucide-react'
 
 interface ImageUploadProps {
-  disabled?: boolean;
-  onChange: (value: string) => void;
-  onRemove: (value: string) => void;
-  value: string[];
+  disabled?: boolean
+  onChange: (value: string) => void
+  onRemove: (value: string) => void
+  value: string[]
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -20,18 +20,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onRemove,
   value,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setIsMounted(true)
+  }, [])
 
+  // eslint-disable-next-line
   const onUpload = (result: any) => {
-    onChange(result.info.secure_url);
-  };
+    onChange(result.info.secure_url)
+  }
 
   if (!isMounted) {
-    return null;
+    return null
   }
 
   return (
@@ -52,12 +53,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 <Trash className="h-4 w-4" />
               </Button>
             </div>
-            <Image 
-              fill
-              className="object-cover"
-              alt="imagem"
-              src={url}
-            />
+            <Image fill className="object-cover" alt="imagem" src={url} />
           </div>
         ))}
       </div>
@@ -69,19 +65,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
           return (
             <Button
-            type="button"
-            disabled={disabled}
-            variant="secondary"
-            onClick={onClick}
+              type="button"
+              disabled={disabled}
+              variant="secondary"
+              onClick={onClick}
             >
-              <ImagePlus className="h-4 w-4 mr-2"/>
+              <ImagePlus className="h-4 w-4 mr-2" />
               Carregue uma imagem
             </Button>
           )
         }}
       </CldUploadWidget>
     </div>
-  );
-};
+  )
+}
 
-export default ImageUpload;
+export default ImageUpload

@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import * as z from "zod";
-import { Store } from "@prisma/client";
-import { Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { toast } from "sonner";
-import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Store } from '@prisma/client'
+import axios from 'axios'
+import { Trash } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
-import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { AlertModal } from '@/components/modals/alert-modal'
+import { ApiAlert } from '@/components/ui/api-alert'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -20,65 +20,65 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AlertModal } from "@/components/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
-import { useOrigin } from "@/hooks/use-origin";
+} from '@/components/ui/form'
+import { Heading } from '@/components/ui/heading'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
+import { useOrigin } from '@/hooks/use-origin'
 
 interface SettingsFormProps {
-  initialData: Store;
+  initialData: Store
 }
 
 const formSchema = z.object({
   name: z.string().min(1).max(17),
-});
+})
 
-type SettingsFormValues = z.infer<typeof formSchema>;
+type SettingsFormValues = z.infer<typeof formSchema>
 
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
-  const params = useParams();
-  const router = useRouter();
-  const origin = useOrigin();
+  const params = useParams()
+  const router = useRouter()
+  const origin = useOrigin()
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
-  });
+  })
 
   const onSubmit = async (data: SettingsFormValues) => {
     try {
-      setLoading(true);
+      setLoading(true)
 
-      await axios.patch(`/api/stores/${params.storeId}`, data);
-      router.refresh();
-      toast.success("Loja atualizada.");
+      await axios.patch(`/api/stores/${params.storeId}`, data)
+      router.refresh()
+      toast.success('Loja atualizada.')
     } catch (error) {
-      toast.error("Algo deu errado.");
+      toast.error('Algo deu errado.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const onDelete = async () => {
     try {
-      setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
-      router.refresh();
-      router.push("/");
-      toast.success("Loja excluída.");
+      setLoading(true)
+      await axios.delete(`/api/stores/${params.storeId}`)
+      router.refresh()
+      router.push('/')
+      toast.success('Loja excluída.')
     } catch (error) {
       toast.error(
-        "Certifique-se de remover todos os produtos e categorias primeiro."
-      );
+        'Certifique-se de remover todos os produtos e categorias primeiro.',
+      )
     } finally {
-      setLoading(false);
-      setOpen(false);
+      setLoading(false)
+      setOpen(false)
     }
-  };
+  }
 
   return (
     <>
@@ -135,7 +135,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         <div className="font-bold">Excluir loja</div>
       </Button>
       <Separator />
-      <ApiAlert title="NEXT_PUBLIC_API_URL" description={`${origin}/api/${params.storeId}`} variant="public" />
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${params.storeId}`}
+        variant="public"
+      />
     </>
-  );
-};
+  )
+}

@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import { useParams, useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Plus } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
 
-import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
-import { DataTable } from "@/components/ui/data-table";
+import { Button } from '@/components/ui/button'
+import { DataTable } from '@/components/ui/data-table'
+import { Heading } from '@/components/ui/heading'
+import { Separator } from '@/components/ui/separator'
 
-import { ProductColumn, columns } from "./columns";
-import { ApiList } from "@/components/ui/api-list";
+import { ApiList } from '@/components/ui/api-list'
+import { ProductColumn, columns } from './columns'
 
 interface ProductClientProps {
-  data: ProductColumn[];
+  data: ProductColumn[]
 }
 
 export const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
-  const router = useRouter();
-  const params = useParams();
+  const router = useRouter()
+  const params = useParams()
 
   return (
     <>
@@ -26,9 +26,7 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
           title={`Produtos(${data.length})`}
           description="Ajustar produtos da loja"
         />
-        <Button
-          onClick={() => router.push(`/${params.storeId}/products/new`)}
-        >
+        <Button onClick={() => router.push(`/${params.storeId}/products/new`)}>
           <Plus className="mr-2 h-4 w-4" />
           Adicionar novo
         </Button>
@@ -39,5 +37,5 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
       <Separator />
       <ApiList entityName="products" entityIdName="productId" />
     </>
-  );
-};
+  )
+}

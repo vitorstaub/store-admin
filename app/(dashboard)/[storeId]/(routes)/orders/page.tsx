@@ -1,10 +1,10 @@
-import { format } from "date-fns";
+import { format } from 'date-fns'
 
-import prismadb from "@/lib/prismadb";
+import prismadb from '@/lib/prismadb'
 
-import { formatter } from "@/lib/utils";
-import { OrderClient } from "./components/client";
-import { OrderColumn } from "./components/columns"
+import { formatter } from '@/lib/utils'
+import { OrderClient } from './components/client'
+import { OrderColumn } from './components/columns'
 
 const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
   const orders = await prismadb.order.findMany({
@@ -19,9 +19,9 @@ const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
       },
     },
     orderBy: {
-      createdAt: "desc",
+      createdAt: 'desc',
     },
-  });
+  })
 
   const formattedOrders: OrderColumn[] = orders.map((item) => ({
     id: item.id,
@@ -29,18 +29,18 @@ const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
     address: item.address,
     products: item.orderItems
       .map((orderItem) => {
-        orderItem.product.stock -= 1;
-        return orderItem.product;
+        orderItem.product.stock -= 1
+        return orderItem.product
       })
-      .join(", "),
+      .join(', '),
     totalPrice: formatter.format(
       item.orderItems.reduce((total, item) => {
-        return total + Number(item.product.price);
-      }, 0)
+        return total + Number(item.product.price)
+      }, 0),
     ),
     isPaid: item.isPaid,
-    createdAt: format(item.createdAt, "dd/MM/yyyy"),
-  }));
+    createdAt: format(item.createdAt, 'dd/MM/yyyy'),
+  }))
 
   return (
     <div className="flex-col">
@@ -48,7 +48,7 @@ const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
         <OrderClient data={formattedOrders} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrdersPage;
+export default OrdersPage

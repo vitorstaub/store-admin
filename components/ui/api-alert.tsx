@@ -1,37 +1,37 @@
-"use client"
+'use client'
 
-import { Copy, Server } from "lucide-react";
-import { toast } from "sonner";
+import { Copy, Server } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge, BadgeProps } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Badge, BadgeProps } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 interface ApiAlertProps {
-  title: string;
-  description: string;
-  variant: "public" | "admin";
+  title: string
+  description: string
+  variant: 'public' | 'admin'
 }
 
-const textMap: Record<ApiAlertProps["variant"], string> = {
-  public: "Public",
-  admin: "Admin",
-};
+const textMap: Record<ApiAlertProps['variant'], string> = {
+  public: 'Public',
+  admin: 'Admin',
+}
 
-const variantMap: Record<ApiAlertProps["variant"], BadgeProps["variant"]> = {
-  public: "secondary",
-  admin: "destructive",
-};
+const variantMap: Record<ApiAlertProps['variant'], BadgeProps['variant']> = {
+  public: 'secondary',
+  admin: 'destructive',
+}
 
 export const ApiAlert: React.FC<ApiAlertProps> = ({
   title,
   description,
-  variant = "public",
+  variant = 'public',
 }) => {
   const onCopy = (description: string) => {
-    navigator.clipboard.writeText(description);
-    toast.success("API Route copiada para a área de transferência.");
-  };
+    navigator.clipboard.writeText(description)
+    toast.success('API Route copiada para a área de transferência.')
+  }
 
   return (
     <Alert className="mb-4">
@@ -49,5 +49,5 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
         </Button>
       </AlertDescription>
     </Alert>
-  );
-};
+  )
+}

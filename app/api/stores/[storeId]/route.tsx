@@ -1,27 +1,27 @@
-import prismadb from "@/lib/prismadb";
-import { auth } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import prismadb from '@/lib/prismadb'
+import { auth } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: { storeId: string } },
 ) {
   try {
-    const { userId } = auth();
-    const body = await req.json();
+    const { userId } = auth()
+    const body = await req.json()
 
-    const { name } = body;
+    const { name } = body
 
     if (!userId) {
-      return new NextResponse("Não autenticado", { status: 400 });
+      return new NextResponse('Não autenticado', { status: 400 })
     }
 
     if (!name) {
-      return new NextResponse("Nome é obrigatório", { status: 400 });
+      return new NextResponse('Nome é obrigatório', { status: 400 })
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store id é obrigatório", { status: 400 });
+      return new NextResponse('Store id é obrigatório', { status: 400 })
     }
 
     const store = await prismadb.store.updateMany({
@@ -32,28 +32,28 @@ export async function PATCH(
       data: {
         name,
       },
-    });
+    })
 
-    return NextResponse.json(store);
+    return NextResponse.json(store)
   } catch (error) {
-    console.log("[STORE_PATCH]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log('[STORE_PATCH]', error)
+    return new NextResponse('Internal error', { status: 500 })
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: { storeId: string } },
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = auth()
 
     if (!userId) {
-      return new NextResponse("Não autenticado", { status: 401 });
+      return new NextResponse('Não autenticado', { status: 401 })
     }
 
     if (!params.storeId) {
-      return new NextResponse("Store id é obrigatório", { status: 400 });
+      return new NextResponse('Store id é obrigatório', { status: 400 })
     }
 
     const store = await prismadb.store.deleteMany({
@@ -61,10 +61,10 @@ export async function DELETE(
         id: params.storeId,
         userId,
       },
-    });
-    return NextResponse.json(store);
+    })
+    return NextResponse.json(store)
   } catch (error) {
-    console.log("[STORE_DELETE]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log('[STORE_DELETE]', error)
+    return new NextResponse('Internal error', { status: 500 })
   }
 }

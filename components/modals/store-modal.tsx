@@ -1,12 +1,12 @@
-"use client";
+'use client'
 
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { toast } from "sonner";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
-import { useStoreModal } from "@/hooks/use-store-modal";
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -14,41 +14,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Modal } from "@/components/ui/modal";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Modal } from '@/components/ui/modal'
+import { useStoreModal } from '@/hooks/use-store-modal'
+import axios from 'axios'
 
 const formSchema = z.object({
   name: z.string().min(1).max(17),
-});
+})
 
 export const StoreModal = () => {
-  const storeModal = useStoreModal();
-  
-  const [loading, setLoading] = useState(false);
-  
+  const storeModal = useStoreModal()
+
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: '',
     },
-  });
+  })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      setLoading(true);
+      setLoading(true)
 
-      const response = await axios.post("/api/stores", values);
+      const response = await axios.post('/api/stores', values)
 
       window.location.assign(`/${response.data.id}`)
     } catch (error) {
-      toast.error("algo deu errado!");
+      toast.error('algo deu errado!')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <Modal
@@ -95,5 +95,5 @@ export const StoreModal = () => {
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}

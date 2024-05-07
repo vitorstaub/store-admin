@@ -1,53 +1,53 @@
-import { auth } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { auth } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
-import prismadb from "@/lib/prismadb";
+import prismadb from '@/lib/prismadb'
 
 export async function GET(
   req: Request,
-  { params }: { params: { sizeId: string } }
+  { params }: { params: { sizeId: string } },
 ) {
   try {
     if (!params.sizeId) {
-      return new NextResponse("Size id é obrigatório", { status: 400 });
+      return new NextResponse('Size id é obrigatório', { status: 400 })
     }
 
     const size = await prismadb.size.findUnique({
       where: {
         id: params.sizeId,
       },
-    });
-    return NextResponse.json(size);
+    })
+    return NextResponse.json(size)
   } catch (error) {
-    console.log("[SIZE_GET]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log('[SIZE_GET]', error)
+    return new NextResponse('Internal error', { status: 500 })
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } },
 ) {
   try {
-    const { userId } = auth();
-    const body = await req.json();
+    const { userId } = auth()
+    const body = await req.json()
 
-    const { name, value } = body;
+    const { name, value } = body
 
     if (!userId) {
-      return new NextResponse("Não autenticado", { status: 400 });
+      return new NextResponse('Não autenticado', { status: 400 })
     }
 
     if (!name) {
-      return new NextResponse("Nome é obrigatório", { status: 400 });
+      return new NextResponse('Nome é obrigatório', { status: 400 })
     }
 
     if (!value) {
-      return new NextResponse("Valor é obrigatório", { status: 400 });
+      return new NextResponse('Valor é obrigatório', { status: 400 })
     }
 
     if (!params.sizeId) {
-      return new NextResponse("Size id é obrigatório", { status: 400 });
+      return new NextResponse('Size id é obrigatório', { status: 400 })
     }
 
     const storeByUserId = await prismadb.store.findFirst({
@@ -55,10 +55,10 @@ export async function PATCH(
         id: params.storeId,
         userId,
       },
-    });
+    })
 
     if (!storeByUserId) {
-      return new NextResponse("Não autorizado", { status: 403 });
+      return new NextResponse('Não autorizado', { status: 403 })
     }
 
     const size = await prismadb.size.updateMany({
@@ -69,28 +69,28 @@ export async function PATCH(
         name,
         value,
       },
-    });
+    })
 
-    return NextResponse.json(size);
+    return NextResponse.json(size)
   } catch (error) {
-    console.log("[SIZE_PATCH]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log('[SIZE_PATCH]', error)
+    return new NextResponse('Internal error', { status: 500 })
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } },
 ) {
   try {
-    const { userId } = auth();
+    const { userId } = auth()
 
     if (!userId) {
-      return new NextResponse("Não autenticado", { status: 401 });
+      return new NextResponse('Não autenticado', { status: 401 })
     }
 
     if (!params.sizeId) {
-      return new NextResponse("Size id é obrigatório", { status: 400 });
+      return new NextResponse('Size id é obrigatório', { status: 400 })
     }
 
     const storeByUserId = await prismadb.store.findFirst({
@@ -98,20 +98,20 @@ export async function DELETE(
         id: params.storeId,
         userId,
       },
-    });
+    })
 
     if (!storeByUserId) {
-      return new NextResponse("Não autorizado", { status: 403 });
+      return new NextResponse('Não autorizado', { status: 403 })
     }
 
     const size = await prismadb.size.deleteMany({
       where: {
         id: params.sizeId,
       },
-    });
-    return NextResponse.json(size);
+    })
+    return NextResponse.json(size)
   } catch (error) {
-    console.log("[SIZE_DELETE]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.log('[SIZE_DELETE]', error)
+    return new NextResponse('Internal error', { status: 500 })
   }
 }

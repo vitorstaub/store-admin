@@ -1,54 +1,54 @@
-"use client";
+'use client'
 
-import { useParams, useRouter } from "next/navigation";
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import axios from "axios";
-import { useState } from "react";
+import axios from 'axios'
+import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
 
+import { AlertModal } from '@/components/modals/alert-modal'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { AlertModal } from "@/components/modals/alert-modal";
+} from '@/components/ui/dropdown-menu'
+import { toast } from 'sonner'
 
-import { CategoryColumn } from "./columns";
+import { CategoryColumn } from './columns'
 
 interface CellActionProps {
-  data: CategoryColumn;
+  data: CategoryColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const router = useRouter();
-  const params = useParams();
+  const router = useRouter()
+  const params = useParams()
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id);
-    toast.success("Category id copiada para a área de transferência.");
-  };
+    navigator.clipboard.writeText(id)
+    toast.success('Category id copiada para a área de transferência.')
+  }
 
   const onDelete = async () => {
     try {
-      setLoading(true);
-      await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
-      router.refresh();
-      toast.success("Categoria excluída.");
+      setLoading(true)
+      await axios.delete(`/api/${params.storeId}/categories/${data.id}`)
+      router.refresh()
+      toast.success('Categoria excluída.')
     } catch (error) {
       toast.error(
-        "Certifique-se de remover todas os produtos que usam essa categoria."
-      );
+        'Certifique-se de remover todas os produtos que usam essa categoria.',
+      )
     } finally {
-      setLoading(false);
-      setOpen(false);
+      setLoading(false)
+      setOpen(false)
     }
-  };
+  }
 
   return (
     <>
@@ -86,5 +86,5 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
-};
+  )
+}

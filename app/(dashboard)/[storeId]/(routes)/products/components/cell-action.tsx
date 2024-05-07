@@ -1,53 +1,51 @@
-"use client";
+'use client'
 
-import { useParams, useRouter } from "next/navigation";
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import axios from "axios";
-import { useState } from "react";
+import axios from 'axios'
+import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
 
+import { AlertModal } from '@/components/modals/alert-modal'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ProductColumn } from "./columns";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { AlertModal } from "@/components/modals/alert-modal";
+} from '@/components/ui/dropdown-menu'
+import { toast } from 'sonner'
+import { ProductColumn } from './columns'
 
 interface CellActionProps {
-  data: ProductColumn;
+  data: ProductColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const router = useRouter();
-  const params = useParams();
+  const router = useRouter()
+  const params = useParams()
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id);
-    toast.success("Products id copiada para a área de transferência.");
-  };
+    navigator.clipboard.writeText(id)
+    toast.success('Products id copiada para a área de transferência.')
+  }
 
   const onDelete = async () => {
     try {
-      setLoading(true);
-      await axios.delete(`/api/${params.storeId}/products/${data.id}`);
-      router.refresh();
-      toast.success("Produto excluído.");
+      setLoading(true)
+      await axios.delete(`/api/${params.storeId}/products/${data.id}`)
+      router.refresh()
+      toast.success('Produto excluído.')
     } catch (error) {
-      toast.error(
-        "Algo deu errado."
-      );
+      toast.error('Algo deu errado.')
     } finally {
-      setLoading(false);
-      setOpen(false);
+      setLoading(false)
+      setOpen(false)
     }
-  };
+  }
 
   return (
     <>
@@ -85,5 +83,5 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  );
-};
+  )
+}

@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import * as z from "zod";
-import { Category, Color, Image, Product, Size } from "@prisma/client";
-import { Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { toast } from "sonner";
-import axios, { AxiosError } from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Category, Color, Image, Product, Size } from '@prisma/client'
+import axios, { AxiosError } from 'axios'
+import { Trash } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
-import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { AlertModal } from '@/components/modals/alert-modal'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Form,
   FormControl,
@@ -21,18 +21,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
+} from '@/components/ui/form'
+import { Heading } from '@/components/ui/heading'
+import ImageUpload from '@/components/ui/image-upload'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+} from '@/components/ui/select'
+import { Separator } from '@/components/ui/separator'
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -44,19 +44,19 @@ const formSchema = z.object({
   sizeId: z.string().min(1),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
-});
+})
 
-type ProductFormValues = z.infer<typeof formSchema>;
+type ProductFormValues = z.infer<typeof formSchema>
 
 interface ProductFormProps {
   initialData:
     | (Product & {
-        images: Image[];
+        images: Image[]
       })
-    | null;
-  categories: Category[];
-  colors: Color[];
-  sizes: Size[];
+    | null
+  categories: Category[]
+  colors: Color[]
+  sizes: Size[]
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -65,20 +65,20 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   colors,
   sizes,
 }) => {
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams()
+  const router = useRouter()
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const title = initialData ? "Editar produtos" : "Criar produto";
+  const title = initialData ? 'Editar produtos' : 'Criar produto'
   const description = initialData
-    ? "Alterar o produto"
-    : "Adicionar um novo produto";
+    ? 'Alterar o produto'
+    : 'Adicionar um novo produto'
   const toastMessage = initialData
-    ? "Produto editado com sucesso."
-    : "Produto criado com sucesso.";
-  const action = initialData ? "Salvar mudanças" : "Criar";
+    ? 'Produto editado com sucesso.'
+    : 'Produto criado com sucesso.'
+  const action = initialData ? 'Salvar mudanças' : 'Criar'
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(formSchema),
@@ -88,60 +88,60 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           price: parseFloat(String(initialData?.price)),
         }
       : {
-          name: "",
+          name: '',
           images: [],
           price: 0,
           stock: 0,
-          categoryId: "",
-          colorId: "",
-          sizeId: "",
+          categoryId: '',
+          colorId: '',
+          sizeId: '',
           isFeatured: false,
           isArchived: false,
         },
-  });
+  })
 
   const onSubmit = async (data: ProductFormValues) => {
     try {
-      setLoading(true);
+      setLoading(true)
       if (initialData) {
         const response = await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,
-          data
-        );
+          data,
+        )
       } else {
         const response = await axios.post(
           `/api/${params.storeId}/products/`,
-          data
-        );
+          data,
+        )
       }
-      router.push(`/${params.storeId}/products`);
-      router.refresh();
-      toast.success(toastMessage);
+      router.push(`/${params.storeId}/products`)
+      router.refresh()
+      toast.success(toastMessage)
     } catch (error) {
       if (error instanceof AxiosError) {
-        toast.error(error.response?.data.message);
+        toast.error(error.response?.data.message)
       } else {
-        toast.error("Erro inesperado");
+        toast.error('Erro inesperado')
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const onDelete = async () => {
     try {
-      setLoading(true);
-      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
-      router.push(`/${params.storeId}/products`);
-      router.refresh();
-      toast.success("Produto excluído.");
+      setLoading(true)
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`)
+      router.push(`/${params.storeId}/products`)
+      router.refresh()
+      toast.success('Produto excluído.')
     } catch (error) {
-      toast.error("Algo deu errado.");
+      toast.error('Algo deu errado.')
     } finally {
-      setLoading(false);
-      setOpen(false);
+      setLoading(false)
+      setOpen(false)
     }
-  };
+  }
 
   return (
     <>
@@ -393,5 +393,5 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         </form>
       </Form>
     </>
-  );
-};
+  )
+}

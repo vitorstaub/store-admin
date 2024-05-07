@@ -1,12 +1,12 @@
-import prismadb from "@/lib/prismadb";
-import { ColorForm } from "./components/color-form";
+import prismadb from '@/lib/prismadb'
+import { ColorForm } from './components/color-form'
 
 const ColorPage = async ({ params }: { params: { colorId: string } }) => {
   const color = await prismadb.color.findUnique({
     where: {
       id: params.colorId,
     },
-  });
+  })
 
   return (
     <div className="flex-col">
@@ -14,7 +14,7 @@ const ColorPage = async ({ params }: { params: { colorId: string } }) => {
         <ColorForm initialData={color} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ColorPage;
+export default ColorPage

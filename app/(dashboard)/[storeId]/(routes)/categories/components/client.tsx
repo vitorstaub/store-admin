@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import { useParams, useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Plus } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
 
-import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
-import { DataTable } from "@/components/ui/data-table";
+import { Button } from '@/components/ui/button'
+import { DataTable } from '@/components/ui/data-table'
+import { Heading } from '@/components/ui/heading'
+import { Separator } from '@/components/ui/separator'
 
-import { CategoryColumn, columns } from "./columns";
-import { ApiList } from "@/components/ui/api-list";
+import { ApiList } from '@/components/ui/api-list'
+import { CategoryColumn, columns } from './columns'
 
 interface CategoryClientProps {
-  data: CategoryColumn[];
+  data: CategoryColumn[]
 }
 
 export const CategoryClient: React.FC<CategoryClientProps> = ({ data }) => {
-  const router = useRouter();
-  const params = useParams();
+  const router = useRouter()
+  const params = useParams()
 
   return (
     <>
@@ -39,5 +39,5 @@ export const CategoryClient: React.FC<CategoryClientProps> = ({ data }) => {
       <Separator />
       <ApiList entityName="categories" entityIdName="categoryId" />
     </>
-  );
-};
+  )
+}

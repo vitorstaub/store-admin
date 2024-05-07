@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import { useParams, useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Plus } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
 
-import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
-import { DataTable } from "@/components/ui/data-table";
+import { Button } from '@/components/ui/button'
+import { DataTable } from '@/components/ui/data-table'
+import { Heading } from '@/components/ui/heading'
+import { Separator } from '@/components/ui/separator'
 
-import { ColorColumn, columns } from "./columns";
-import { ApiList } from "@/components/ui/api-list";
+import { ApiList } from '@/components/ui/api-list'
+import { ColorColumn, columns } from './columns'
 
 interface ColorsClientProps {
-  data: ColorColumn[];
+  data: ColorColumn[]
 }
 
 export const ColorsClient: React.FC<ColorsClientProps> = ({ data }) => {
-  const router = useRouter();
-  const params = useParams();
+  const router = useRouter()
+  const params = useParams()
 
   return (
     <>
@@ -37,5 +37,5 @@ export const ColorsClient: React.FC<ColorsClientProps> = ({ data }) => {
       <Separator />
       <ApiList entityName="colors" entityIdName="colorId" />
     </>
-  );
-};
+  )
+}

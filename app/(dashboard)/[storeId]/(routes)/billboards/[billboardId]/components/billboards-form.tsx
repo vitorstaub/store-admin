@@ -1,18 +1,17 @@
-"use client";
+'use client'
 
-import * as z from "zod";
-import { Billboard } from "@prisma/client";
-import { Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { toast } from "sonner";
-import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Billboard } from '@prisma/client'
+import axios from 'axios'
+import { Trash } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import * as z from 'zod'
 
-import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { AlertModal } from '@/components/modals/alert-modal'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -20,82 +19,88 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
+} from '@/components/ui/form'
+import { Heading } from '@/components/ui/heading'
+import ImageUpload from '@/components/ui/image-upload'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
 
 const formSchema = z.object({
   label: z.string().min(1),
   imageUrl: z.string().min(1),
-});
+})
 
-type BillboardFormValues = z.infer<typeof formSchema>;
+type BillboardFormValues = z.infer<typeof formSchema>
 
 interface BillboardFormProps {
-  initialData: Billboard | null;
+  initialData: Billboard | null
 }
 
 export const BillboardForm: React.FC<BillboardFormProps> = ({
   initialData,
 }) => {
-  const params = useParams();
-  const router = useRouter();
+  const params = useParams()
+  const router = useRouter()
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const title = initialData ? "Editar destaque" : "Criar destaque";
+  const title = initialData ? 'Editar destaque' : 'Criar destaque'
   const description = initialData
-    ? "Alterar o destaque"
-    : "Adicionar um novo destaque";
+    ? 'Alterar o destaque'
+    : 'Adicionar um novo destaque'
   const toastMessage = initialData
-    ? "Destaque editado com sucesso."
-    : "Destaque criado com sucesso.";
-  const action = initialData ? "Salvar mudanças" : "Criar destaque";
+    ? 'Destaque editado com sucesso.'
+    : 'Destaque criado com sucesso.'
+  const action = initialData ? 'Salvar mudanças' : 'Criar destaque'
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-      label: "",
-      imageUrl: "",
+      label: '',
+      imageUrl: '',
     },
-  });
+  })
 
   const onSubmit = async (data: BillboardFormValues) => {
     try {
-      setLoading(true);
+      setLoading(true)
       if (initialData) {
-        await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+        await axios.patch(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          data,
+        )
       } else {
-        await axios.post(`/api/${params.storeId}/billboards/`, data);
+        await axios.post(`/api/${params.storeId}/billboards/`, data)
       }
       router.push(`/${params.storeId}/billboards`)
-      router.refresh();
-      toast.success(toastMessage);
+      router.refresh()
+      toast.success(toastMessage)
     } catch (error) {
-      toast.error("Algo deu errado.");
+      toast.error('Algo deu errado.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const onDelete = async () => {
     try {
-      setLoading(true);
-      await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
-      router.push(`/${params.storeId}/billboards`);
-      router.refresh();
-      toast.success("Destaque excluído.");
+      setLoading(true)
+      await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`,
+      )
+      router.push(`/${params.storeId}/billboards`)
+      router.refresh()
+      toast.success('Destaque excluído.')
     } catch (error) {
       toast.error(
-        "Certifique-se de remover todas as categorias que usam esse destaque."
-      );
+        'Certifique-se de remover todas as categorias que usam esse destaque.',
+      )
     } finally {
-      setLoading(false);
-      setOpen(false);
+      setLoading(false)
+      setOpen(false)
     }
-  };
+  }
 
   return (
     <>
@@ -135,7 +140,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     value={field.value ? [field.value] : []}
                     disabled={loading}
                     onChange={(url) => field.onChange(url)}
-                    onRemove={() => field.onChange("")}
+                    onRemove={() => field.onChange('')}
                   />
                 </FormControl>
                 <FormMessage />
@@ -167,5 +172,5 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         </form>
       </Form>
     </>
-  );
-};
+  )
+}
