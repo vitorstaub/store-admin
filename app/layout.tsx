@@ -1,13 +1,12 @@
 const inter = Inter({ subsets: ["latin"] });
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 
 import { ModalProvider } from "@/components/modal-provider";
 
-import "./globals.css";
-import prismadb from "@/lib/prismadb";
 import { Toaster } from "sonner";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
