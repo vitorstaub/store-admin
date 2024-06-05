@@ -95,35 +95,35 @@ Here you can list the main routes of your API.
 ​
 | products route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /api/{storeId}/products</kbd>     | retrieves products info
-| <kbd>POST /api/{storeId}/products</kbd>     | add products
-| <kbd>PATCH /api/{storeId}/products/{productId}</kbd>     | edit product 
-| <kbd>DELETE /api/{storeId}/products/{productId}</kbd>     | remove product 
+|  <kbd>public</kbd>  <kbd>GET /api/{storeId}/products</kbd>     | retrieves products info
+|  <kbd>admin</kbd>  <kbd>POST /api/{storeId}/products</kbd>     | add products
+|  <kbd>admin</kbd>  <kbd>PATCH /api/{storeId}/products/{productId}</kbd>     | edit product 
+|  <kbd>admin</kbd>  <kbd>DELETE /api/{storeId}/products/{productId}</kbd>     | remove product 
 
 | billboards route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /api/{storeId}/billboards</kbd>     | retrieves billboards info 
-| <kbd>POST /api/{storeId}/billboards</kbd>     | add billboards 
-| <kbd>PATCH /api/{storeId}/billboards/{billboardId}</kbd>     | edit billboard 
-| <kbd>DELETE /api/{storeId}/billboards/{billboardId}</kbd>     | remove billboard 
+|  <kbd>public</kbd>  <kbd>GET /api/{storeId}/billboards</kbd>     | retrieves billboards info 
+|  <kbd>admin</kbd>  <kbd>POST /api/{storeId}/billboards</kbd>     | add billboards 
+|  <kbd>admin</kbd>  <kbd>PATCH /api/{storeId}/billboards/{billboardId}</kbd>     | edit billboard 
+|  <kbd>admin</kbd>  <kbd>DELETE /api/{storeId}/billboards/{billboardId}</kbd>     | remove billboard 
 
 | categories route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /api/{storeId}/categories</kbd>     | retrieves categories info 
-| <kbd>POST /api/{storeId}/categories</kbd>     | add categories  
-| <kbd>PATCH /api/{storeId}/categories/{categoryId}</kbd>     | edit category 
-| <kbd>DELETE /api/{storeId}/categories/{categoryId}</kbd>     | remove category 
+|  <kbd>public</kbd>  <kbd>GET /api/{storeId}/categories</kbd>     | retrieves categories info 
+|  <kbd>admin</kbd>  <kbd>POST /api/{storeId}/categories</kbd>     | add categories  
+|  <kbd>admin</kbd>  <kbd>PATCH /api/{storeId}/categories/{categoryId}</kbd>     | edit category 
+|  <kbd>admin</kbd>  <kbd>DELETE /api/{storeId}/categories/{categoryId}</kbd>     | remove category 
 
 | sizes route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /api/{storeId}/sizes</kbd>     | retrieves sizes info 
-| <kbd>POST /api/{storeId}/sizes</kbd>     | add sizes 
-| <kbd>PATCH /api/{storeId}/sizes/{sizeId}</kbd>     | edit size 
-| <kbd>DELETE /api/{storeId}/sizes/{sizeId}</kbd>     | remove size 
+|  <kbd>public</kbd>  <kbd>GET /api/{storeId}/sizes</kbd>     | retrieves sizes info 
+|  <kbd>admin</kbd>  <kbd>POST /api/{storeId}/sizes</kbd>     | add sizes 
+|  <kbd>admin</kbd>  <kbd>PATCH /api/{storeId}/sizes/{sizeId}</kbd>     | edit size 
+|  <kbd>admin</kbd>  <kbd>DELETE /api/{storeId}/sizes/{sizeId}</kbd>     | remove size 
 
 | colors route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /api/{storeId}/colors</kbd>     | retrieves colors info 
-| <kbd>POST /api/{storeId}/colors</kbd>     | add colors 
-| <kbd>PATCH /api/{storeId}/colors/{colorId}</kbd>     | edit color 
-| <kbd>DELETE /api/{storeId}/colors/{colorId}</kbd>     | remove color 
+| <kbd>public</kbd> <kbd>GET /api/{storeId}/colors</kbd>     | retrieves colors info 
+| <kbd>admin</kbd> <kbd>POST /api/{storeId}/colors</kbd>     | add colors 
+| <kbd>admin</kbd> <kbd>PATCH /api/{storeId}/colors/{colorId}</kbd>     | edit color 
+| <kbd>admin</kbd> <kbd>DELETE /api/{storeId}/colors/{colorId}</kbd>     | remove color 
