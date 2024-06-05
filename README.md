@@ -48,9 +48,9 @@ This project offers a comprehensive solution for online stores businesses, provi
 How to clone your project
 
 ```bash
-git clone https://github.com/vitorstaub/store-main.git
+git clone https://github.com/vitorstaub/store-admin.git
 
-cd store-main
+cd store-admin
 ```
 
 <h3>Install Packages</h3>
