@@ -23,8 +23,6 @@ Admin | CMS | API
 <p align="center">
  <a href="#started">Getting Started</a> • 
   <a href="#routes">API Endpoints</a> •
- <a href="#colab">Collaborators</a> •
- <a href="#contribute">Contribute</a>
 </p>
 
 <p align="center">
@@ -40,8 +38,6 @@ This project offers a comprehensive solution for online stores businesses, provi
 <h2 id="started">🚀 Getting started</h2>
 
 <h3>Prerequisites</h3>
-
-Here you list all prerequisites necessary for running your project.
 
 - [NodeJS](https://nodejs.org/en)
 
@@ -69,8 +65,6 @@ Use the `.env` as reference to create your configuration file `.env` with your C
 ```yaml
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY={CLERK_PUBLIC_KEY}
 CLERK_SECRET_KEY={CLERK_SECRET_KEY}
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 
 DATABASE_URL={DATABASE_KEY}
 
