@@ -3,6 +3,7 @@
 [ZOD]: https://img.shields.io/badge/Zod-black?style=for-the-badge&logo=zod
 [AXIOS]: https://img.shields.io/badge/Axios-black?style=for-the-badge&logo=axios&logoColor=black&color=fff
 [TAIL]: https://img.shields.io/badge/Tailwind-%2300027a?style=for-the-badge&logo=tailwindcss
+[PRISMA]: https://img.shields.io/badge/Prisma-55DBCB?style=for-the-badge&logo=prisma
 
 <h1 align="center" style="font-weight: bold;">
 Store
@@ -14,6 +15,7 @@ Admin | CMS | API
 
   ![next.js][NEXT]
   ![typescript][TYPESCRIPT__BADGE]
+  ![prisma][PRISMA]
   ![zod][ZOD]
   ![axios][AXIOS]
   ![tail][TAIL]
@@ -89,7 +91,7 @@ npm run dev
 
 <h2 id="routes">📍 API Endpoints</h2>
 
-Here you can list the main routes of your API, and what are their expected request bodies.
+Here you can list the main routes of your API.
 ​
 | products route               | description                                          
 |----------------------|-----------------------------------------------------
